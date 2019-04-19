@@ -17,8 +17,16 @@ public class MainActivity extends AppCompatActivity {
     Button rightBtn;
     Button undoBtn;
     Button resetBtn;
+
+    Button netLBtn;
+    Button netRBtn;
+
+    TextView netsLeft;
+    TextView netsRight;
+
     TextView left;
     TextView right;
+
     Integer lastPressedBtn = 0;
     ArrayList<Integer> moves = new ArrayList<>();
 
@@ -34,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         left = (TextView) findViewById(R.id.left);
         right = (TextView) findViewById(R.id.right);
+
+        netLBtn = (Button) findViewById(R.id.netLeftBtn);
+        netRBtn = (Button) findViewById(R.id.netRightBtn);
+
+        netsLeft = (TextView) findViewById(R.id.netLeft);
+        netsRight = (TextView) findViewById(R.id.netRight);
+
+
 
         leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
                         l = score.toString();
 
-                        lastPressedBtn = 1;
+
                         left.setText(l);
                     }
                     else if (lastPressedBtn == 2) {
@@ -94,8 +110,26 @@ public class MainActivity extends AppCompatActivity {
 
                         l = score.toString();
 
-                        lastPressedBtn = 1;
+
                         right.setText(l);
+                    }
+                    else if (lastPressedBtn == 3) {
+                        String l = String.valueOf(netsLeft.getText());
+                        Integer score = Integer.parseInt(l);
+                        if(score > 0)
+                            score --;
+                        l = score.toString();
+
+                        netsLeft.setText(l);
+                    }
+                    else if (lastPressedBtn == 4) {
+                        String l = String.valueOf(netsRight.getText());
+                        Integer score = Integer.parseInt(l);
+                        if(score > 0)
+                            score --;
+                        l = score.toString();
+
+                        netsRight.setText(l);
                     }
 
                 }
@@ -113,6 +147,68 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        netLBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String l = String.valueOf(netsLeft.getText());
+                Integer score = Integer.parseInt(l);
+
+                score ++;
+
+                if ( score < 2) {
+                    l = score.toString();
+                    lastPressedBtn = 3;
+                    moves.add(lastPressedBtn);
+                }
+                else {
+                    score = 0;
+                    l = score.toString();
+                    String r = String.valueOf(right.getText());
+                    Integer scor = Integer.parseInt(r);
+
+                    scor ++;
+
+                    r = scor.toString();
+
+                    lastPressedBtn = 2;
+                    moves.add(lastPressedBtn);
+                    right.setText(r);
+                }
+
+                netsLeft.setText(l);
+            }
+        });
+        netRBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String l = String.valueOf(netsRight.getText());
+                Integer score = Integer.parseInt(l);
+
+                score ++;
+
+                if ( score < 2) {
+                    l = score.toString();
+                    lastPressedBtn = 4;
+                    moves.add(lastPressedBtn);
+                }
+                else {
+                    score = 0;
+                    l = score.toString();
+                    String r = String.valueOf(left.getText());
+                    Integer scor = Integer.parseInt(r);
+
+                    scor ++;
+
+                    r = scor.toString();
+
+                    lastPressedBtn = 1;
+                    moves.add(lastPressedBtn);
+                    left.setText(r);
+                }
+
+                netsRight.setText(l);
+            }
+        });
 
     }
 }
